@@ -1,0 +1,109 @@
+---
+title: "ResumenRedes1"
+author: "Jaquelin Morillo"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Resumen Redes
+
+Este documento es un resumen del script 1 del curso de Redes. el objetivo es la comprensión detallada de los elementos contemplados en el script proporcionado en clase.
+
+#### Creación de redes con datos ficticios
+
+Siempre hay que instalar los paquetes necesarios
+
+```{r}
+rm(list=ls())
+require(here)
+library(igraph)
+aqui <- here()
+```
+
+Creo datos con sus relaciones y luego ploteo la red
+```{r}
+red1 <- graph_from_literal(1-2,
+                          2-3,
+                          3-4,
+                          4-5,
+                          1-5,
+                          2-3)
+plot(red1)
+```
+
+También podemos usar strings los cuales se toman como factores
+```{R}
+red2 <- graph_from_literal(Alfa-Beta, # en este caso toma los nombres como factores
+                          Gamma-Delta,
+                          Delta-Alfa,
+                          Omega-Beta)
+plot(red2)
+```
+
+Por medio de la definición de diadas,podemos otorgar direccionalidad a los nodos.
+
+```{r}
+red3 <- graph_from_literal(Alfa-+Beta, # aquí es digida
+                           Gamma+-Delta,
+                           Delta++Alfa,
+                           Omega-+Beta)
+plot(red3)
+```
+
+Otra posible acción, es la inclusión de atributos:
+
+```{r}
+relaciones <- matrix(c("Alfa","Beta",  #edlist
+                 "Gamma","Delta",
+                 "Delta","Alfa",
+                 "Omega","Beta"), ncol=2, byrow = T)
+atributos <- matrix(c("Alfa","Beta","Gamma","Delta","Omega", #atributos
+                    "4","4","5","5","5", # letras
+                    "2","1","2","1","1"), # veces que tienen la letra "a"
+                    ncol=3, nrow = 5, byrow=F)
+red4 <- graph_from_data_frame(relaciones, 
+                              vertices=atributos,
+                              directed = F)
+plot(red4)
+```
+
+Sin embargo, tambien puedo importar datos de otros formatos
+```{r}
+x <- read.csv(paste0(aqui,"/red_ilustracion.csv"), sep=";")
+relaciones5 <- cbind(x$nombre,x$empresa)
+red5 <- graph_from_data_frame(relaciones5, 
+                              directed = T)
+plot(red5)
+
+##red6 <- read_graph(paste0(aqui,"/red_empresas.igraph"))
+##plot(red6)
+```
+
+#### Creación de redes con datos ficticios
+Caracteristicas del objeto igraph:
+
+```{r}
+red2$name <- "Grafo en clase"
+
+# Vertices
+V(red2)
+
+# Edges
+E(red2)
+
+# ambos datos
+print_all(red2) # o simplemente
+red2
+
+# atributos de los vertices y edges
+V(red2)$name # ya estaban 
+
+E(red2)$name # no hay
+E(red2)$name <- c("a","b","c","d") 
+
+V(red2)$color <- c("blue","red","red","red","pink")
+```
