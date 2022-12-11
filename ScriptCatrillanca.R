@@ -21,7 +21,7 @@ relaciones <- cbind(base$emisor,base$receptor)
 red1 <- graph_from_data_frame(relaciones, 
                               directed = T)
 
-plot(red1, edge.arrow.size=.01,vertex.label=NA, vertex.color="red",
+plot(red1, edge.arrow.size=.15,vertex.label=NA, vertex.color="red",
      vertex.frame.color="red",vertex.shape="circle", vertex.size=2)
 
 hist(degree(red1), breaks = 400)
@@ -36,14 +36,13 @@ edge_density(red1)
 diameter(red1, directed = T) 
 
 # plot de la red general - sin pesos en los nodos
-plot(red1, edge.arrow.size=.01,vertex.label=NA, vertex.color="blue",
+plot(red1, edge.arrow.size=.15,vertex.label=NA, vertex.color="blue",
      vertex.frame.color="blue",vertex.shape="circle", vertex.size=2)
 
 # plot de la red general - con pesos en los nodos
 size_nodo <- degree(red1)
-plot(red1, edge.arrow.size=.01,vertex.label=NA, vertex.color="#10B502",
+plot(red1, edge.arrow.size=.15,vertex.label=NA, vertex.color="#10B502",
      vertex.frame.color="#10B502",vertex.shape="circle", vertex.size=size_nodo*0.04)
-
 
 # centralidad promedio
 degree_centrality <- mean(degree (red1))
@@ -82,10 +81,10 @@ componentes
 g <- which.max(componentes$csize) # identificamos el gigante
 red2 <- induced.subgraph(red1, which(componentes$membership == g)) # nos quedamos con el componente gigante
 
-#plot de la neuva red
+#plot de la nueva red solo del componente principal
 
 size_nodo <- degree(red2)
-plot(red2, edge.arrow.size=.01,vertex.label=NA, vertex.color="red",
+plot(red2, edge.arrow.size=.15,vertex.label=NA, vertex.color="red",
      vertex.frame.color="red",vertex.shape="circle", vertex.size=size_nodo*0.04)
 
 

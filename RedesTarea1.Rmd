@@ -1,0 +1,116 @@
+---
+title: "Tarea 1 - Redes Sociales"
+author: "Jaquelin M. Morillo Remesnitzky"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, include = TRUE)
+```
+
+
+## Introducción
+<div style="text-align: justify">
+El 14 de noviembre de 2018, en Temucuicui, Región de la Araucanía, durante un operativo policial, el sargento de Carabineros de Chile Carlos Alarcón Molina, disparó al comunero mapuche Camilo Catrillanca quien falleció al recibir un tiro en su cabeza. Este hecho no sólo revolucionó los medios de difusión tradicionales sino que inició un fuerte movimiento de afiliación y rechazo a lo sucedido en redes sociales. De manera particular, este suceso se reflejó en la red social Twitter bajo el hashtag #CamiloCatrillanca, entre otros.
+<div/>
+
+<br>
+
+
+<div style="text-align: justify">
+Este trabajo busca analizar, a partir de los datos proporcionados en clase, las interacciones que se llevaron a cabo en la red social a partir de diversas métricas con el fin de describir la red involucrada tras el hashtag #CamiloCatrillanca.
+<div/>
+
+## Resultados
+### Tratamiento y limpieza de datos
+
+<div style="text-align: justify">
+Utilizando los paquetes igraph, triangle y tidyverse en el software R (Versión 4.2.1) y a partir de la base de datos proporcionada (4095 tweets), se elaboró una red dirigida cuyas relaciones se originan desde el usuario emisor del twitt con links a los usuarios que se mencionaban en el texto. Asimismo, se optó por descartar del análisis 21 mensajes en los que los emisores se citaban a si mismos con el fin de evitar loops con nodos autodirigidos. Finalmente, la red quedó compuesta por 2832 nodos y 5135 links entre ellos, integrados en 44 componentes.
+<div/>
+
+```{r, include=FALSE}
+require(here)
+library(igraph)
+library(readr)
+library(readxl)
+library(tidyverse)
+library(triangle)
+aqui <- here()
+
+base <- read.csv(paste0(aqui,"/B.csv"), sep=";")
+relaciones <- cbind(base$emisor,base$receptor)
+red1 <- graph_from_data_frame(relaciones, 
+                              directed = T)
+
+#contar cantidad de nodos, links y componentes
+length(E(red1))
+length(V(red1))
+
+count_components(red1, mode = c("weak", "strong"))
+```
+
+
+```{r, echo=FALSE, fig.width=30, fig.height=30}
+size_nodo <- degree(red1)
+plot(red1, edge.arrow.size=.15,vertex.label=NA, vertex.color="#6C3483",
+     vertex.frame.color="#6C3483",vertex.shape="circle", vertex.size=size_nodo*0.04)
+
+```
+
+### Analisis de la Red #CamiloCatrilanca
+
+#### Grados
+
+<div style="text-align: justify">
+A continuación se analizó la distribución de grados de los nodos involucrados en la red. En este marco, hay una importante concentración de nodos con grado 1 (1648). Esto es concordante con la naturaleza de la red dado que los usuarios, por lo general, emiten un sólo twitt y luego no tienen mas interacciones.      
+<div/>
+
+```{r, echo=FALSE, fig.width=10, fig.height=10}
+hist(degree(red1), breaks = 1000,  labels = TRUE, xlim=c(0, 10), ylim=c(0, 2000), col="#42c5f5", border ="#42c5f5", 
+     main = "Histograma de grados", xlab = "Grados", ylab = "Frecuencia")
+
+```
+
+<div style="text-align: justify">
+Tambien, es posible mostrar esta información a nivel logarítmica, lo que es consistente con la presencia de un efecto Matthew, en el que la se puede ver una mayor concentración en los grados menores.
+<div/>
+
+```{r, echo=FALSE, fig.width=10, fig.height=10, warning=FALSE}
+require(igraphdata)
+
+plot(log(degree_distribution(red1)), main='Log-Log degree distribution', xlab = "log degree", ylab = "log frecuency", col="dodgerblue1", pch= 18)
+```
+
+
+<div style="text-align: justify">
+A continuación, se muestran los histogramas de detalle de los in-degree y los out-dregree.
+<div/>
+
+```{r, echo=FALSE, fig.width=10, fig.height=10}
+
+hist(degree(red1, mode = "in"), breaks = 1000,  labels = TRUE, xlim=c(0, 10), ylim=c(0, 2500),col="#42f58a",border ="#42f58a", 
+     main = "Histograma de grados: In-Degree", xlab = "Grados", ylab = "Frecuencia")
+hist(degree(red1, mode = "out"), breaks = 1000,  labels = TRUE, xlim=c(0, 10), ylim=c(10, 2000),col="#dc5de3",border ="#dc5de3", 
+     main = "Histograma de grados: Out-Degree", xlab = "Grados", ylab = "Frecuencia")
+```
+
+<div style="text-align: justify">
+
+<div/>
+
+<div style="text-align: justify">
+<div/>
+
+<div style="text-align: justify">
+<div/>
+
+<div style="text-align: justify">
+<div/>
+
+<div style="text-align: justify">
+<div/>
+
+
+<br>
+

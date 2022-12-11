@@ -372,7 +372,7 @@ componentes
 g <- which.max(componentes$csize) # identificamos el gigante
 red <- induced.subgraph(medici, which(componentes$membership == g)) # nos quedamos con el componente gigante
 V(medici)
-V(red)
+  V(red)
 
 # densidad
 edge_density(red)

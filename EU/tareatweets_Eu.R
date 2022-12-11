@@ -38,7 +38,7 @@ centr_degree(red)
 centr_eigen(red)
 E(red)
 V(red)
-degree(red) #todos los grados dde la red
+degree(red) #todos los grados de la red
 degree(red, mode="in") # solo grados in
 degree(red, mode="out") #solo grados out
 
