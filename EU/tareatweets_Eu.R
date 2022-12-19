@@ -56,8 +56,7 @@ hist(degree(red, mode = "in"), breaks = 100)
 hist(degree(red, mode = "out"), breaks = 100)
 
 #no se que hace esto
-table(sapply(decompose(red), vcount))
-table(sapply(decompose(red), diameter))
+ table(sapply(decompose(red), diameter))
 
 #distancia
 distancia <- round(mean_distance(red),3) 

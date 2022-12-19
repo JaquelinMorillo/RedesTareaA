@@ -24,11 +24,21 @@ red1 <- graph_from_data_frame(relaciones,
 plot(red1, edge.arrow.size=.15,vertex.label=NA, vertex.color="red",
      vertex.frame.color="red",vertex.shape="circle", vertex.size=2)
 
+#contar cantidad de nodos, links y componentes
+length(E(red1))
+length(V(red1))
+
+count_components(red1, mode = c("weak", "strong"))
+
+
+
+
+
 hist(degree(red1), breaks = 400)
 
 summary(degree(red1))
 
-count_components(red1, mode = c("weak", "strong"))
+
 # esto calcula la densidad de los enlases
 edge_density(red1)
 
@@ -67,9 +77,12 @@ centr_degree(
 )
 
 #histogramas de la red
-hist(degree(red1), breaks = 100)
-hist(degree(red1, mode = "in"), breaks = 100)
-hist(degree(red1, mode = "out"), breaks = 100)
+hist(degree(red1), breaks = 1000,  labels = TRUE, xlim=c(0, 10), ylim=c(0, 2000), col="#42c5f5", border ="#42c5f5", 
+     main = "Histograma de grados", xlab = "Grados", ylab = "Frecuencia")
+hist(degree(red1, mode = "in"), breaks = 1000,  labels = TRUE, xlim=c(0, 10), ylim=c(0, 2500),col="#42f58a",border ="#42f58a", 
+     main = "Histograma de grados: In-Degree", xlab = "Grados", ylab = "Frecuencia")
+hist(degree(red1, mode = "out"), breaks = 1000,  labels = TRUE, xlim=c(0, 10), ylim=c(10, 2000),col="#dc5de3",border ="#dc5de3", 
+     main = "Histograma de grados: Out-Degree", xlab = "Grados", ylab = "Frecuencia")
 
 # acá sacamos la cantidad de triadas
 triad.census(red1)

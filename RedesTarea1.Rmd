@@ -96,17 +96,45 @@ hist(degree(red1, mode = "out"), breaks = 1000,  labels = TRUE, xlim=c(0, 10), y
 ```
 
 <div style="text-align: justify">
-
+Otra de las métricas que podemos obtener es el análisis de triadas. En este sentido nuestra red cuenta con 15991 triadas de tipo A<-B->C, 195830 de tipo A->B<-C, 1507 de tipo A->B->C, 1 de tipo A<->B->C, 578 de tipo A->B<-C, A->C, 57 de tipo A<-B->C, A<->C, 17 de tipo A->B<-C, A<->C y una de tipo A<->B<->C, A<->C.
 <div/>
+
+```{r, include=FALSE}
+triad.census(red1)
+```
+<div style="text-align: justify">
+También podemos estudiar la distancia media de la red, que, en este casdo es de 1,357. 
+<div/>
+
+```{r, include=FALSE}
+distancia <- round(mean_distance(red1),3) 
+distancia
+```
 
 <div style="text-align: justify">
+Finalmente, podemos obtener la centralidad de la red, la cual, en este caso es de 0,07260.
 <div/>
 
-<div style="text-align: justify">
-<div/>
+```{r, include=FALSE}
+
+centr_degree(
+  red1,
+  mode = c("all", "out", "in", "total"),
+  loops = TRUE,
+  normalized = TRUE
+)
+```
 
 <div style="text-align: justify">
+Una vez calculadas las métricas de la red general, podemos extraer el componente principal y analizar sus métricas
 <div/>
+
+```{r, include=FALSE}
+
+```
+
+
+
 
 <div style="text-align: justify">
 <div/>
